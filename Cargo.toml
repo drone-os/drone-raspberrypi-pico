@@ -1,0 +1,45 @@
+[package]
+name = "drone-raspberrypi-pico"
+version = "0.15.0"
+authors = ["Valentyn Valiaiev <valentine.valyaeff@gmail.com>"]
+edition = "2021"
+repository = "https://github.com/drone-os/drone-cortexm"
+homepage = "https://www.drone-os.com/"
+documentation = "https://api.drone-os.com/drone-cortexm/0.15/drone_raspberrypi_pico/"
+readme = "README.md"
+license = "MIT OR Apache-2.0"
+keywords = [
+    "rp2040",
+    "raspberrypi",
+    "pico",
+    "rtos",
+    "bare-metal",
+]
+categories = [
+    "embedded",
+    "asynchronous",
+    "concurrency",
+    "no-std",
+    "hardware-support",
+]
+description = """
+Raspberry Pi Pico (RP2040) support for Drone, an Embedded Operating System.
+"""
+
+[badges]
+maintenance = { status = "actively-developed" }
+
+[features]
+default = []
+std = ["drone-core/std", "drone-cortexm/std"]
+all = []
+
+[dependencies.drone-core]
+version = "0.15.0"
+path = "../drone-core"
+
+[dependencies.drone-cortexm]
+version = "0.15.0"
+path = "../drone-cortexm"
+
+[dependencies]
