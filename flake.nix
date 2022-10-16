@@ -8,17 +8,21 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    pico-sdk = {
+      url = "github:raspberrypi/pico-sdk/1.4.0";
+      flake = false;
+    };
   };
 
-  outputs = { self, utils, nixpkgs, fenix }:
+  outputs = { self, utils, nixpkgs, fenix, pico-sdk }:
     utils.lib.eachDefaultSystem (system:
       let
         buildTarget = "thumbv6m-none-eabi";
         rustFlags = ''--cfg drone_cortexm="cortexm0plus_r0p1"'';
         rustChannel = {
           channel = "nightly";
-          date = "2022-09-18";
-          sha256 = "eYFYpSF2PBUJVzZGZrdtDMpVfHkypzTMLWotdEVq7eM=";
+          date = "2022-09-23";
+          sha256 = "lv8DWMZm/vmAfC8RF8nwMXKp2xiMxtsthqTEs7bWyms=";
         };
 
         pkgs = nixpkgs.legacyPackages.${system};
@@ -68,12 +72,14 @@
         updateVersions = pkgs.writeShellScriptBin "update-versions" ''
           sed -i "s/\(api\.drone-os\.com\/drone-raspberrypi-pico\/\)[0-9]\+\(\.[0-9]\+\)\+/\1$(echo $1 | sed 's/\(.*\)\.[0-9]\+/\1/')/" \
             Cargo.toml src/lib.rs
-          sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[package\]/version = \"$1\"/;t;x}" \
+          sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[workspace.package\]/version = \"$1\"/;t;x}" \
+            Cargo.toml
+          sed -i "/\[.*\]/h;/version = \"=.*\"/{x;s/\[.*drone-raspberrypi-pico-.*\]/version = \"=$1\"/;t;x}" \
             Cargo.toml
           sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-core\]/version = \"$2\"/;t;x}" \
-            Cargo.toml src/pieces/*/Cargo.toml src/pieces/Cargo.toml src/periph/*/Cargo.toml
+            Cargo.toml
           sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-cortexm\]/version = \"$3\"/;t;x}" \
-            Cargo.toml src/pieces/*/Cargo.toml src/pieces/Cargo.toml src/periph/*/Cargo.toml
+            Cargo.toml
           sed -i "s/\(drone-raspberrypi-pico.*\)version = \"[^\"]\+\"/\1version = \"$1\"/" \
             src/lib.rs
         '';
@@ -100,9 +106,23 @@
             updateVersions
             publishCrates
             publishDocs
-          ];
+          ] ++ (with pkgs; [
+            cmake
+            python3
+          ]) ++ (with pkgs.pkgsCross.arm-embedded; [
+            stdenv.cc
+            libcCross
+          ]);
           RUST_SRC_PATH = "${rustToolchain}/lib/rustlib/src/rust/library";
+          PICO_SDK_PATH = pico-sdk;
+          LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
           CARGO_BUILD_RUSTFLAGS = rustFlags;
+          EXTRA_CLANG_CFLAGS = with pkgs.pkgsCross.arm-embedded.stdenv;
+            builtins.toString ([ "-nostdinc" ] ++ builtins.map (path: "-isystem ${path}") [
+              "${cc.cc}/lib/gcc/${targetPlatform.config}/${cc.cc.version}/include"
+              "${cc.cc}/lib/gcc/${targetPlatform.config}/${cc.cc.version}/include-fixed"
+              "${cc.cc}/${targetPlatform.config}/sys-include"
+            ]);
         } // extraEnv);
       in
       {

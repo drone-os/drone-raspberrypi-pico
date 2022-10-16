@@ -1,13 +1,37 @@
-[package]
-name = "drone-raspberrypi-pico"
+[workspace]
+members = ["sdk"]
+
+[workspace.package]
 version = "0.15.0"
 authors = ["Valentyn Valiaiev <valentine.valyaeff@gmail.com>"]
 edition = "2021"
-repository = "https://github.com/drone-os/drone-cortexm"
+repository = "https://github.com/drone-os/drone-raspberrypi-pico"
 homepage = "https://www.drone-os.com/"
-documentation = "https://api.drone-os.com/drone-cortexm/0.15/drone_raspberrypi_pico/"
-readme = "README.md"
 license = "MIT OR Apache-2.0"
+
+[workspace.dependencies.drone-raspberrypi-pico-sdk]
+version = "=0.15.0"
+path = "sdk"
+
+[workspace.dependencies.drone-core]
+version = "0.15.0"
+path = "../drone-core"
+features = ["xip"]
+
+[workspace.dependencies.drone-cortexm]
+version = "0.15.0"
+path = "../drone-cortexm"
+
+[package]
+name = "drone-raspberrypi-pico"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+homepage.workspace = true
+license.workspace = true
+documentation = "https://api.drone-os.com/drone-raspberrypi-pico/0.15/drone_raspberrypi_pico/"
+readme = "README.md"
 keywords = [
     "rp2040",
     "raspberrypi",
@@ -31,15 +55,10 @@ maintenance = { status = "actively-developed" }
 
 [features]
 default = []
-std = ["drone-core/std", "drone-cortexm/std"]
+std = ["drone-raspberrypi-pico-sdk/std", "drone-core/std", "drone-cortexm/std"]
 all = []
 
-[dependencies.drone-core]
-version = "0.15.0"
-path = "../drone-core"
-
-[dependencies.drone-cortexm]
-version = "0.15.0"
-path = "../drone-cortexm"
-
 [dependencies]
+drone-core.workspace = true
+drone-cortexm.workspace = true
+drone-raspberrypi-pico-sdk.workspace = true

@@ -1,0 +1,22 @@
+[package]
+name = "drone-raspberrypi-pico-sdk"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+homepage.workspace = true
+license.workspace = true
+description = """
+Raw bindings to Raspberry Pi Pico SDK.
+"""
+
+[lib]
+path = "lib.rs"
+
+[features]
+default = []
+std = []
+
+[build-dependencies]
+bindgen = "0.60.1"
+color-eyre = "0.6.2"
