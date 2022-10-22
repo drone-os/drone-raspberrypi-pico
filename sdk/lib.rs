@@ -5,3 +5,6 @@
 
 #[cfg(not(feature = "std"))]
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+
+#[cfg(not(feature = "std"))]
+include!(concat!(env!("OUT_DIR"), "/boot2.rs"));
