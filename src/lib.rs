@@ -27,6 +27,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 pub mod map;
+pub mod reg;
 
 /// Raw bindings to Raspberry Pi Pico SDK.
 pub mod sdk {

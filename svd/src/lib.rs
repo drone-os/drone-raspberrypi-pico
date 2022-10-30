@@ -30,7 +30,11 @@ pub fn generate_index() -> Result<()> {
 }
 
 fn generator() -> Generator<'static> {
-    Generator::new("rp2040_reg_tokens")
+    let mut generator = Generator::new("rp2040_reg_tokens");
+    generator.register_traits_callback(|peripheral, _, _| {
+        (peripheral != "SIO").then(|| "RegAtomicAlias".to_string()).into_iter().collect()
+    });
+    generator
 }
 
 fn svd_parse() -> Result<Device> {

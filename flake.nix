@@ -102,6 +102,7 @@
         publishCrates = pkgs.writeShellScriptBin "publish-crates" ''
           cd svd && nix develop '.#native' -c cargo publish
           cd sdk && cargo publish
+          cd src/pieces/traits && cargo publish
           sleep 30
           cd src/pieces/1 && cargo publish
           cd src/pieces/2 && cargo publish

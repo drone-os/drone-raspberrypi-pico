@@ -3,6 +3,7 @@ members = [
     "sdk",
     "svd",
     "src/map/pieces",
+    "src/map/pieces/traits",
     "src/map/pieces/1",
     "src/map/pieces/2",
     "src/map/pieces/3",
@@ -37,6 +38,10 @@ path = "svd"
 [workspace.dependencies.drone-raspberrypi-pico-map-pieces]
 version = "=0.15.0"
 path = "src/map/pieces"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-traits]
+version = "=0.15.0"
+path = "src/map/pieces/traits"
 
 [workspace.dependencies.drone-raspberrypi-pico-map-pieces-1]
 version = "=0.15.0"
@@ -149,4 +154,5 @@ drone-core.workspace = true
 drone-cortexm.workspace = true
 drone-raspberrypi-pico-map-periph-gpio = { workspace = true, optional = true }
 drone-raspberrypi-pico-map-pieces.workspace = true
+drone-raspberrypi-pico-map-pieces-traits.workspace = true
 drone-raspberrypi-pico-sdk.workspace = true
