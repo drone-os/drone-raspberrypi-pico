@@ -1,5 +1,6 @@
 //! RP2040 register and interrupt mappings.
 
+pub mod periph;
 pub mod reg;
 pub mod thr;
 

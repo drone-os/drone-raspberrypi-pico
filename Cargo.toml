@@ -15,6 +15,7 @@ members = [
     "src/map/pieces/10",
     "src/map/pieces/11",
     "src/map/pieces/12",
+    "src/map/periph/gpio",
 ]
 
 [workspace.package]
@@ -85,6 +86,10 @@ path = "src/map/pieces/11"
 version = "=0.15.0"
 path = "src/map/pieces/12"
 
+[workspace.dependencies.drone-raspberrypi-pico-map-periph-gpio]
+version = "=0.15.0"
+path = "src/map/periph/gpio"
+
 [workspace.dependencies.drone-config]
 version = "0.15.0"
 path = "../drone/config"
@@ -136,10 +141,12 @@ maintenance = { status = "actively-developed" }
 [features]
 default = []
 std = ["drone-raspberrypi-pico-sdk/std", "drone-core/std", "drone-cortexm/std"]
-all = []
+gpio = ["drone-raspberrypi-pico-map-periph-gpio"]
+all = ["gpio"]
 
 [dependencies]
 drone-core.workspace = true
 drone-cortexm.workspace = true
-drone-raspberrypi-pico-sdk.workspace = true
+drone-raspberrypi-pico-map-periph-gpio = { workspace = true, optional = true }
 drone-raspberrypi-pico-map-pieces.workspace = true
+drone-raspberrypi-pico-sdk.workspace = true

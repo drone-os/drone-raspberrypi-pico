@@ -3,6 +3,8 @@
 #![warn(clippy::pedantic)]
 #![allow(clippy::missing_errors_doc, clippy::missing_panics_doc)]
 
+mod sio;
+
 pub use drone_config::{bail, Result};
 use drone_svd::{Device, Generator};
 use std::env;
@@ -27,12 +29,14 @@ pub fn generate_index() -> Result<()> {
     generator().generate_index(&mut reg_output, dev)
 }
 
+fn generator() -> Generator<'static> {
+    Generator::new("rp2040_reg_tokens")
+}
+
 fn svd_parse() -> Result<Device> {
     let pico_sdk_path = env::var("PICO_SDK_PATH")?;
     let pico_sdk_path = Path::new(&pico_sdk_path);
-    drone_svd::parse(pico_sdk_path.join("src/rp2040/hardware_regs/rp2040.svd"))
-}
-
-fn generator() -> Generator<'static> {
-    Generator::new("rp2040_reg_tokens")
+    let mut dev = drone_svd::parse(pico_sdk_path.join("src/rp2040/hardware_regs/rp2040.svd"))?;
+    sio::patch(&mut dev);
+    Ok(dev)
 }
