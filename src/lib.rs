@@ -26,4 +26,6 @@
 #![allow(clippy::doc_markdown)]
 #![cfg_attr(not(feature = "std"), no_std)]
 
+pub mod map;
+
 pub use drone_raspberrypi_pico_sdk as sdk;

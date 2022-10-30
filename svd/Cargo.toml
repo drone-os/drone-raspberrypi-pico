@@ -1,0 +1,15 @@
+[package]
+name = "drone-raspberrypi-pico-svd"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+homepage.workspace = true
+license.workspace = true
+description = """
+SVD bindings generator for Raspberry Pi Pico SDK.
+"""
+
+[dependencies]
+drone-config.workspace = true
+drone-svd.workspace = true

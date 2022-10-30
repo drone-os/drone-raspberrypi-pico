@@ -1,5 +1,10 @@
 [workspace]
-members = ["sdk"]
+members = [
+    "sdk",
+    "svd",
+    "src/map/pieces",
+    "src/map/pieces/1",
+]
 
 [workspace.package]
 version = "0.15.0"
@@ -13,6 +18,22 @@ license = "MIT OR Apache-2.0"
 version = "=0.15.0"
 path = "sdk"
 
+[workspace.dependencies.drone-raspberrypi-pico-svd]
+version = "=0.15.0"
+path = "svd"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces]
+version = "=0.15.0"
+path = "src/map/pieces"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-1]
+version = "=0.15.0"
+path = "src/map/pieces/1"
+
+[workspace.dependencies.drone-config]
+version = "0.15.0"
+path = "../drone/config"
+
 [workspace.dependencies.drone-core]
 version = "0.15.0"
 path = "../drone-core"
@@ -21,6 +42,10 @@ features = ["xip"]
 [workspace.dependencies.drone-cortexm]
 version = "0.15.0"
 path = "../drone-cortexm"
+
+[workspace.dependencies.drone-svd]
+version = "0.15.0"
+path = "../drone-svd"
 
 [package]
 name = "drone-raspberrypi-pico"
@@ -62,3 +87,4 @@ all = []
 drone-core.workspace = true
 drone-cortexm.workspace = true
 drone-raspberrypi-pico-sdk.workspace = true
+drone-raspberrypi-pico-map-pieces.workspace = true

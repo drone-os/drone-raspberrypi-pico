@@ -64,27 +64,40 @@
           set -ex
           cargo rdme --check
           cargo fmt --all --check
-          cargo clippy --workspace --features all -- --deny warnings
+          cargo clippy --workspace --exclude drone-raspberrypi-pico-svd --features all -- --deny warnings
+          nix develop '.#native' -c cargo clippy --package drone-raspberrypi-pico-svd -- --deny warnings
           nix develop '.#native' -c cargo test --workspace --features all,std
           RUSTDOCFLAGS='-D warnings' cargo doc --no-deps --package drone-raspberrypi-pico --features all
+          RUSTDOCFLAGS='-D warnings' nix develop '.#native' -c cargo doc --no-deps --package drone-raspberrypi-pico-svd
         '';
 
         updateVersions = pkgs.writeShellScriptBin "update-versions" ''
           sed -i "s/\(api\.drone-os\.com\/drone-raspberrypi-pico\/\)[0-9]\+\(\.[0-9]\+\)\+/\1$(echo $1 | sed 's/\(.*\)\.[0-9]\+/\1/')/" \
-            Cargo.toml src/lib.rs
+            Cargo.toml src/pieces/*/Cargo.toml src/pieces/Cargo.toml src/lib.rs
           sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[workspace.package\]/version = \"$1\"/;t;x}" \
             Cargo.toml
           sed -i "/\[.*\]/h;/version = \"=.*\"/{x;s/\[.*drone-raspberrypi-pico-.*\]/version = \"=$1\"/;t;x}" \
             Cargo.toml
-          sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-core\]/version = \"$2\"/;t;x}" \
+          sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-config\]/version = \"$2\"/;t;x}" \
             Cargo.toml
-          sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-cortexm\]/version = \"$3\"/;t;x}" \
+          sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-core\]/version = \"$3\"/;t;x}" \
+            Cargo.toml
+          sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-cortexm\]/version = \"$4\"/;t;x}" \
+            Cargo.toml
+          sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-svd\]/version = \"$5\"/;t;x}" \
             Cargo.toml
           sed -i "s/\(drone-raspberrypi-pico.*\)version = \"[^\"]\+\"/\1version = \"$1\"/" \
             src/lib.rs
         '';
 
         publishCrates = pkgs.writeShellScriptBin "publish-crates" ''
+          cd svd && nix develop '.#native' -c cargo publish
+          cd sdk && cargo publish
+          sleep 30
+          cd src/pieces/1 && cargo publish
+          sleep 30
+          cd src/pieces && cargo publish
+          sleep 30
           cargo publish --features all
         '';
 
@@ -113,8 +126,8 @@
             stdenv.cc
             libcCross
           ]);
-          RUST_SRC_PATH = "${rustToolchain}/lib/rustlib/src/rust/library";
           PICO_SDK_PATH = pico-sdk;
+          RUST_SRC_PATH = "${rustToolchain}/lib/rustlib/src/rust/library";
           LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
           CARGO_BUILD_RUSTFLAGS = rustFlags;
           EXTRA_CLANG_CFLAGS = with pkgs.pkgsCross.arm-embedded.stdenv;
