@@ -18,6 +18,17 @@ path = "lib.rs"
 drone-core.workspace = true
 drone-cortexm.workspace = true
 drone-raspberrypi-pico-map-pieces-1.workspace = true
+drone-raspberrypi-pico-map-pieces-2.workspace = true
+drone-raspberrypi-pico-map-pieces-3.workspace = true
+drone-raspberrypi-pico-map-pieces-4.workspace = true
+drone-raspberrypi-pico-map-pieces-5.workspace = true
+drone-raspberrypi-pico-map-pieces-6.workspace = true
+drone-raspberrypi-pico-map-pieces-7.workspace = true
+drone-raspberrypi-pico-map-pieces-8.workspace = true
+drone-raspberrypi-pico-map-pieces-9.workspace = true
+drone-raspberrypi-pico-map-pieces-10.workspace = true
+drone-raspberrypi-pico-map-pieces-11.workspace = true
+drone-raspberrypi-pico-map-pieces-12.workspace = true
 
 [build-dependencies]
 drone-raspberrypi-pico-svd.workspace = true

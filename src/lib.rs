@@ -28,4 +28,7 @@
 
 pub mod map;
 
-pub use drone_raspberrypi_pico_sdk as sdk;
+/// Raw bindings to Raspberry Pi Pico SDK.
+pub mod sdk {
+    pub use drone_raspberrypi_pico_sdk::*;
+}

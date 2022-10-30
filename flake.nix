@@ -71,6 +71,15 @@
           RUSTDOCFLAGS='-D warnings' nix develop '.#native' -c cargo doc --no-deps --package drone-raspberrypi-pico-svd
         '';
 
+        generateMapPieces = pkgs.writeShellScriptBin "generate-map-pieces" ''
+          for i in $(seq 2 $1); do
+            rm -rf src/map/pieces/$i
+            cp -r src/map/pieces/1 src/map/pieces/$i
+            sed -i "s/\(pieces[-_]\)1\b/\1$i/g" src/map/pieces/$i/Cargo.toml
+            sed -i "s/\(generate_regs(\)1\(,\s\+[0-9]\+)\)/\1$i\2/" src/map/pieces/$i/build.rs
+          done
+        '';
+
         updateVersions = pkgs.writeShellScriptBin "update-versions" ''
           sed -i "s/\(api\.drone-os\.com\/drone-raspberrypi-pico\/\)[0-9]\+\(\.[0-9]\+\)\+/\1$(echo $1 | sed 's/\(.*\)\.[0-9]\+/\1/')/" \
             Cargo.toml src/pieces/*/Cargo.toml src/pieces/Cargo.toml src/lib.rs
@@ -95,6 +104,17 @@
           cd sdk && cargo publish
           sleep 30
           cd src/pieces/1 && cargo publish
+          cd src/pieces/2 && cargo publish
+          cd src/pieces/3 && cargo publish
+          cd src/pieces/4 && cargo publish
+          cd src/pieces/5 && cargo publish
+          cd src/pieces/6 && cargo publish
+          cd src/pieces/7 && cargo publish
+          cd src/pieces/8 && cargo publish
+          cd src/pieces/9 && cargo publish
+          cd src/pieces/10 && cargo publish
+          cd src/pieces/11 && cargo publish
+          cd src/pieces/12 && cargo publish
           sleep 30
           cd src/pieces && cargo publish
           sleep 30
@@ -116,6 +136,7 @@
             rustAnalyzer
             cargoRdme
             checkAll
+            generateMapPieces
             updateVersions
             publishCrates
             publishDocs

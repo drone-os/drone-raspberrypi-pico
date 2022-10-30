@@ -1,0 +1,22 @@
+[package]
+name = "drone-raspberrypi-pico-map-pieces-4"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+homepage.workspace = true
+license.workspace = true
+documentation = "https://api.drone-os.com/drone-raspberrypi-pico/0.15/drone_raspberrypi_pico_map_pieces_4/"
+description = """
+RP2040 memory-mapped register bindings for Drone, an Embedded Operating System.
+"""
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+drone-core.workspace = true
+drone-cortexm.workspace = true
+
+[build-dependencies]
+drone-raspberrypi-pico-svd.workspace = true

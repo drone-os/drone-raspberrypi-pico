@@ -4,6 +4,17 @@ members = [
     "svd",
     "src/map/pieces",
     "src/map/pieces/1",
+    "src/map/pieces/2",
+    "src/map/pieces/3",
+    "src/map/pieces/4",
+    "src/map/pieces/5",
+    "src/map/pieces/6",
+    "src/map/pieces/7",
+    "src/map/pieces/8",
+    "src/map/pieces/9",
+    "src/map/pieces/10",
+    "src/map/pieces/11",
+    "src/map/pieces/12",
 ]
 
 [workspace.package]
@@ -29,6 +40,50 @@ path = "src/map/pieces"
 [workspace.dependencies.drone-raspberrypi-pico-map-pieces-1]
 version = "=0.15.0"
 path = "src/map/pieces/1"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-2]
+version = "=0.15.0"
+path = "src/map/pieces/2"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-3]
+version = "=0.15.0"
+path = "src/map/pieces/3"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-4]
+version = "=0.15.0"
+path = "src/map/pieces/4"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-5]
+version = "=0.15.0"
+path = "src/map/pieces/5"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-6]
+version = "=0.15.0"
+path = "src/map/pieces/6"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-7]
+version = "=0.15.0"
+path = "src/map/pieces/7"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-8]
+version = "=0.15.0"
+path = "src/map/pieces/8"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-9]
+version = "=0.15.0"
+path = "src/map/pieces/9"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-10]
+version = "=0.15.0"
+path = "src/map/pieces/10"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-11]
+version = "=0.15.0"
+path = "src/map/pieces/11"
+
+[workspace.dependencies.drone-raspberrypi-pico-map-pieces-12]
+version = "=0.15.0"
+path = "src/map/pieces/12"
 
 [workspace.dependencies.drone-config]
 version = "0.15.0"
