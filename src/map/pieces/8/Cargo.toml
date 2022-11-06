@@ -20,4 +20,4 @@ drone-cortexm.workspace = true
 drone-raspberrypi-pico-map-pieces-traits.workspace = true
 
 [build-dependencies]
-drone-raspberrypi-pico-svd.workspace = true
+drone-raspberrypi-pico-gen.workspace = true

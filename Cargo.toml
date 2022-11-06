@@ -1,7 +1,7 @@
 [workspace]
 members = [
     "sdk",
-    "svd",
+    "gen",
     "src/map/pieces",
     "src/map/pieces/traits",
     "src/map/pieces/1",
@@ -31,9 +31,9 @@ license = "MIT OR Apache-2.0"
 version = "=0.15.0"
 path = "sdk"
 
-[workspace.dependencies.drone-raspberrypi-pico-svd]
+[workspace.dependencies.drone-raspberrypi-pico-gen]
 version = "=0.15.0"
-path = "svd"
+path = "gen"
 
 [workspace.dependencies.drone-raspberrypi-pico-map-pieces]
 version = "=0.15.0"

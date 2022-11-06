@@ -64,11 +64,11 @@
           set -ex
           cargo rdme --check
           cargo fmt --all --check
-          cargo clippy --workspace --exclude drone-raspberrypi-pico-svd --features all -- --deny warnings
-          nix develop '.#native' -c cargo clippy --package drone-raspberrypi-pico-svd -- --deny warnings
+          cargo clippy --workspace --exclude drone-raspberrypi-pico-gen --features all -- --deny warnings
+          nix develop '.#native' -c cargo clippy --package drone-raspberrypi-pico-gen -- --deny warnings
           nix develop '.#native' -c cargo test --workspace --features all,std
           RUSTDOCFLAGS='-D warnings' cargo doc --no-deps --package drone-raspberrypi-pico --features all
-          RUSTDOCFLAGS='-D warnings' nix develop '.#native' -c cargo doc --no-deps --package drone-raspberrypi-pico-svd
+          RUSTDOCFLAGS='-D warnings' nix develop '.#native' -c cargo doc --no-deps --package drone-raspberrypi-pico-gen
         '';
 
         generateMapPieces = pkgs.writeShellScriptBin "generate-map-pieces" ''
@@ -93,14 +93,14 @@
             Cargo.toml
           sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-cortexm\]/version = \"$4\"/;t;x}" \
             Cargo.toml
-          sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-svd\]/version = \"$5\"/;t;x}" \
+          sed -i "/\[.*\]/h;/version = \".*\"/{x;s/\[.*drone-gen\]/version = \"$5\"/;t;x}" \
             Cargo.toml
           sed -i "s/\(drone-raspberrypi-pico.*\)version = \"[^\"]\+\"/\1version = \"$1\"/" \
             src/lib.rs
         '';
 
         publishCrates = pkgs.writeShellScriptBin "publish-crates" ''
-          cd svd && nix develop '.#native' -c cargo publish
+          cd gen && nix develop '.#native' -c cargo publish
           cd sdk && cargo publish
           cd src/pieces/traits && cargo publish
           sleep 30

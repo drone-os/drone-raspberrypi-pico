@@ -31,4 +31,4 @@ drone-raspberrypi-pico-map-pieces-11.workspace = true
 drone-raspberrypi-pico-map-pieces-12.workspace = true
 
 [build-dependencies]
-drone-raspberrypi-pico-svd.workspace = true
+drone-raspberrypi-pico-gen.workspace = true

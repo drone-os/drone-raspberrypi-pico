@@ -1,5 +1,5 @@
 [package]
-name = "drone-raspberrypi-pico-svd"
+name = "drone-raspberrypi-pico-gen"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -7,7 +7,7 @@ repository.workspace = true
 homepage.workspace = true
 license.workspace = true
 description = """
-SVD bindings generator for Raspberry Pi Pico SDK.
+Code generator for Raspberry Pi Pico SDK.
 """
 
 [dependencies]

@@ -1,4 +1,4 @@
-//! SVD bindings generator for Raspberry Pi Pico SDK.
+//! Code generator for Raspberry Pi Pico SDK.
 
 #![warn(clippy::pedantic)]
 #![allow(clippy::missing_errors_doc, clippy::missing_panics_doc)]
