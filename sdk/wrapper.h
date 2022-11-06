@@ -1,6 +1,7 @@
 #include "pico/bit_ops.h"
+#include "pico/bootrom.h"
 #include "pico/divider.h"
 #include "pico/double.h"
 #include "pico/float.h"
 #include "pico/int64_ops.h"
-#include "pico/stdlib.h"
+#include "pico/multicore.h"

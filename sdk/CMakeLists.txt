@@ -15,10 +15,11 @@ pico_sdk_init()
 add_library(drone_raspberrypi_pico_sdk wrapper.c)
 
 target_link_libraries(drone_raspberrypi_pico_sdk
-    pico_stdlib
     pico_mem_ops
     pico_bit_ops
     pico_int64_ops
     pico_divider
     pico_float
-    pico_double)
+    pico_double
+    pico_bootrom
+    pico_multicore)
