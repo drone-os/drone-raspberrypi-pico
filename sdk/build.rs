@@ -18,16 +18,18 @@ fn main() -> Result<()> {
     let out_dir = Path::new(&out_dir);
     let build_dir = out_dir.join("build");
 
-    fs::create_dir_all(&build_dir)?;
-    env::set_current_dir(&build_dir)?;
-
+    println!("cargo:rerun-if-changed=wrapper.h");
+    println!("cargo:rerun-if-changed=wrapper.c");
     println!("cargo:rerun-if-changed=CMakeLists.txt");
     println!("cargo:rerun-if-changed=pico_sdk_import.cmake");
-    if env::var_os("CARGO_FEATURE_STD").is_none() {
-        println!("cargo:rustc-link-search=native={}", build_dir.display());
-        println!("cargo:rustc-link-lib=drone_raspberrypi_pico_sdk");
+    if env::var_os("CARGO_FEATURE_STD").is_some() {
+        return Ok(());
     }
+    println!("cargo:rustc-link-search=native={}", build_dir.display());
+    println!("cargo:rustc-link-lib=drone_raspberrypi_pico_sdk");
 
+    fs::create_dir_all(&build_dir)?;
+    env::set_current_dir(&build_dir)?;
     configure(src_dir)?;
     build()?;
     let c_flags = parse_flags(&build_dir.join(FLAGS_PATH))?;

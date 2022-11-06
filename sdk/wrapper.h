@@ -1,1 +1,6 @@
+#include "pico/bit_ops.h"
+#include "pico/divider.h"
+#include "pico/double.h"
+#include "pico/float.h"
+#include "pico/int64_ops.h"
 #include "pico/stdlib.h"

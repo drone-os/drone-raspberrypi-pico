@@ -26,10 +26,32 @@
 #![allow(clippy::doc_markdown)]
 #![cfg_attr(not(feature = "std"), no_std)]
 
+use core::cell::UnsafeCell;
+
 pub mod map;
 pub mod reg;
 
 /// Raw bindings to Raspberry Pi Pico SDK.
 pub mod sdk {
     pub use drone_raspberrypi_pico_sdk::*;
+}
+
+/// Initializes Raspberry Pi Pico SDK runtime.
+///
+/// # Safety
+///
+/// This function is not thread-safe.
+pub unsafe fn init() {
+    type InitFn = extern "C" fn();
+    extern "C" {
+        static PREINIT_ARRAY_BASE: UnsafeCell<InitFn>;
+        static PREINIT_ARRAY_END: UnsafeCell<InitFn>;
+    }
+    unsafe {
+        let mut ptr = PREINIT_ARRAY_BASE.get();
+        while ptr < PREINIT_ARRAY_END.get() {
+            (*ptr)();
+            ptr = ptr.add(1);
+        }
+    }
 }

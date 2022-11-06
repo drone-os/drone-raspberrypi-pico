@@ -64,11 +64,16 @@
           set -ex
           cargo rdme --check
           cargo fmt --all --check
+          find sdk -name '*.[ch]' | xargs clang-format --dry-run -Werror
           cargo clippy --workspace --exclude drone-raspberrypi-pico-gen --features all -- --deny warnings
           nix develop '.#native' -c cargo clippy --package drone-raspberrypi-pico-gen -- --deny warnings
           nix develop '.#native' -c cargo test --workspace --features all,std
           RUSTDOCFLAGS='-D warnings' cargo doc --no-deps --package drone-raspberrypi-pico --features all
           RUSTDOCFLAGS='-D warnings' nix develop '.#native' -c cargo doc --no-deps --package drone-raspberrypi-pico-gen
+        '';
+
+        clangFormatAll = pkgs.writeShellScriptBin "clang-format-all" ''
+          find sdk -name '*.[ch]' | xargs clang-format -i
         '';
 
         generateMapPieces = pkgs.writeShellScriptBin "generate-map-pieces" ''
@@ -137,6 +142,7 @@
             rustAnalyzer
             cargoRdme
             checkAll
+            clangFormatAll
             generateMapPieces
             updateVersions
             publishCrates
