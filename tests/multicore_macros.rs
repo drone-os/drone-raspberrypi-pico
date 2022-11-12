@@ -1,9 +1,10 @@
 #![feature(allocator_api)]
 #![feature(slice_ptr_get)]
+#![feature(sync_unsafe_cell)]
 #![no_implicit_prelude]
 
-use ::drone_core::{heap, override_layout};
-use ::drone_raspberrypi_pico::global_heap;
+use ::drone_core::{heap, override_layout, stream};
+use ::drone_raspberrypi_pico::{global_heap, global_stream};
 
 override_layout! { r#"
 [ram]
@@ -11,6 +12,18 @@ main = { origin = 0x20000000, size = "256K" }
 
 [data]
 ram = "main"
+
+[stream]
+ram = "main"
+
+[stream.core0]
+ram = "main"
+size = "260"
+init-primary = true
+
+[stream.core1]
+ram = "main"
+size = "260"
 
 [heap.core0]
 ram = "main"
@@ -29,6 +42,20 @@ pools = [
     { block = "32", count = "80" },
 ]
 "# }
+
+stream! {
+    layout => core0;
+    metadata => pub Stream0;
+    instance => pub STREAM0;
+}
+
+stream! {
+    layout => core1;
+    metadata => pub Stream1;
+    instance => pub STREAM1;
+}
+
+global_stream!(STREAM0, STREAM1);
 
 heap! {
     layout => core0;

@@ -31,10 +31,9 @@ use drone_core::reg::prelude::*;
 use drone_core::token::Token;
 use drone_raspberrypi_pico_map_pieces::reg::sio::Cpuid;
 
-mod heap;
 pub mod map;
+pub mod multicore;
 pub mod reg;
-mod stream;
 
 /// Raw bindings to Raspberry Pi Pico SDK.
 pub mod sdk {
