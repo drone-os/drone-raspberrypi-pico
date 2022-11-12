@@ -21,7 +21,7 @@
 //! std = ["drone-raspberrypi-pico/std"]
 //! ```
 
-#![warn(missing_docs)]
+#![warn(missing_docs, unsafe_op_in_unsafe_fn)]
 #![warn(clippy::pedantic)]
 #![allow(clippy::doc_markdown)]
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -34,6 +34,7 @@ use drone_raspberrypi_pico_map_pieces::reg::sio::Cpuid;
 mod heap;
 pub mod map;
 pub mod reg;
+mod stream;
 
 /// Raw bindings to Raspberry Pi Pico SDK.
 pub mod sdk {
@@ -62,6 +63,7 @@ pub unsafe fn init() {
 
 /// Returns 0 when called on processor core 0, and 1 when called on processor
 /// core 1.
+#[must_use]
 pub fn cpuid() -> u32 {
     // Safe because the register is read-only.
     let cpuid = unsafe { Cpuid::<Urt>::take() };

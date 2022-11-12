@@ -15,9 +15,9 @@ macro_rules! global_heap {
                 #[export_name = "alloc"]
                 unsafe fn alloc(&self, layout: ::core::alloc::Layout) -> *mut u8 {
                     if $crate::cpuid() == 0 {
-                        ::core::alloc::Allocator::allocate(&$heap0, layout)
+                        unsafe { ::core::alloc::Allocator::allocate(&$heap0, layout) }
                     } else {
-                        ::core::alloc::Allocator::allocate(&$heap1, layout)
+                        unsafe { ::core::alloc::Allocator::allocate(&$heap1, layout) }
                     }
                     .map(|ptr| ptr.as_mut_ptr())
                     .unwrap_or(::core::ptr::null_mut())
@@ -28,9 +28,9 @@ macro_rules! global_heap {
                 unsafe fn dealloc(&self, ptr: *mut u8, layout: ::core::alloc::Layout) {
                     let ptr = ::core::ptr::NonNull::new_unchecked(ptr);
                     if $crate::cpuid() == 0 {
-                        ::core::alloc::Allocator::deallocate(&$heap0, ptr, layout)
+                        unsafe { ::core::alloc::Allocator::deallocate(&$heap0, ptr, layout) }
                     } else {
-                        ::core::alloc::Allocator::deallocate(&$heap1, ptr, layout)
+                        unsafe { ::core::alloc::Allocator::deallocate(&$heap1, ptr, layout) }
                     }
                 }
             }
