@@ -49,7 +49,7 @@ pub mod marker;
 pub mod prelude;
 
 use core::ptr::write_volatile;
-use drone_core::bitfield::{Bitfield, Bits};
+use drone_core::bitfield::Bitfield;
 use drone_core::reg::tag::RegTag;
 #[doc(no_inline)]
 pub use drone_cortexm::reg::*;
@@ -187,7 +187,7 @@ where
     where
         F: for<'b> FnOnce(&'b mut <Self as Reg<T>>::Hold<'a>) -> &'b mut <Self as Reg<T>>::Hold<'a>,
     {
-        self.modify_xor_val(f(&mut self.hold(zero_val::<T, R>())).val());
+        self.modify_xor_val(f(&mut self.zeroed()).val());
     }
 
     #[inline]
@@ -195,7 +195,7 @@ where
     where
         F: for<'b> FnOnce(&'b Self, &'b mut Self::Val),
     {
-        let mut val = zero_val::<T, R>();
+        let mut val = self.zeroed_val();
         f(self, &mut val);
         self.modify_xor_val(val);
     }
@@ -226,7 +226,7 @@ where
     where
         F: for<'b> FnOnce(&'b mut <Self as Reg<T>>::Hold<'a>) -> &'b mut <Self as Reg<T>>::Hold<'a>,
     {
-        self.modify_set_val(f(&mut self.hold(zero_val::<T, R>())).val());
+        self.modify_set_val(f(&mut self.zeroed()).val());
     }
 
     #[inline]
@@ -234,7 +234,7 @@ where
     where
         F: for<'b> FnOnce(&'b Self, &'b mut Self::Val),
     {
-        let mut val = zero_val::<T, R>();
+        let mut val = self.zeroed_val();
         f(self, &mut val);
         self.modify_set_val(val);
     }
@@ -265,7 +265,7 @@ where
     where
         F: for<'b> FnOnce(&'b mut <Self as Reg<T>>::Hold<'a>) -> &'b mut <Self as Reg<T>>::Hold<'a>,
     {
-        self.modify_clear_val(f(&mut self.hold(zero_val::<T, R>())).val());
+        self.modify_clear_val(f(&mut self.zeroed()).val());
     }
 
     #[inline]
@@ -273,7 +273,7 @@ where
     where
         F: for<'b> FnOnce(&'b Self, &'b mut Self::Val),
     {
-        let mut val = zero_val::<T, R>();
+        let mut val = self.zeroed_val();
         f(self, &mut val);
         self.modify_clear_val(val);
     }
@@ -319,8 +319,4 @@ fn clear_alias_ptr<T: RegTag, R: Reg<T>>() -> *mut <<R as Reg<T>>::Val as Bitfie
     {
         (R::ADDRESS + REG_ALIAS_CLR_BITS as usize) as *mut <R::Val as Bitfield>::Bits
     }
-}
-
-fn zero_val<T: RegTag, R: Reg<T>>() -> <R as Reg<T>>::Val {
-    unsafe { R::val_from(<<R::Val as Bitfield>::Bits as Bits>::from_usize(0)) }
 }

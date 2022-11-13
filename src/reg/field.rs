@@ -2,10 +2,10 @@
 //!
 //! See [the top-level module documentation](self) for details.
 
-use super::{clear_alias_ptr, set_alias_ptr, xor_alias_ptr, zero_val};
+use super::{clear_alias_ptr, set_alias_ptr, xor_alias_ptr};
 use crate::reg::RegAtomicAlias;
 use core::ptr::write_volatile;
-use drone_core::bitfield::Bitfield;
+use drone_core::bitfield::{Bitfield, Bits};
 use drone_core::reg::field::WWRegFieldBit;
 use drone_core::reg::tag::RegTag;
 use drone_core::reg::{Reg, WReg};
@@ -114,7 +114,7 @@ fn store_val<T: RegTag, R: Reg<T>>(
     ptr: *mut <<R as Reg<T>>::Val as Bitfield>::Bits,
     f: impl Fn(&mut <R as Reg<T>>::Val),
 ) {
-    let mut val = zero_val::<T, R>();
+    let mut val = unsafe { R::val_from(<<R::Val as Bitfield>::Bits as Bits>::from_usize(0)) };
     f(&mut val);
     unsafe { write_volatile(ptr, val.bits()) };
 }
