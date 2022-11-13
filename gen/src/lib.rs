@@ -174,6 +174,9 @@ const WRAPPED_BUILTINS: &[&str] = &[
 /// function sets up the final binary to use those optimized functions instead
 /// of standard ones.
 pub fn replace_builtins() {
+    if env::var_os("CARGO_FEATURE_STD").is_some() {
+        return;
+    }
     for builtin in WRAPPED_BUILTINS {
         println!("cargo:rustc-link-arg=--wrap={builtin}");
     }
