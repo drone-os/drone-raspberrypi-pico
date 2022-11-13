@@ -155,7 +155,7 @@ maintenance = { status = "actively-developed" }
 
 [features]
 default = ["periph-all"]
-std = ["drone-raspberrypi-pico-sdk/std", "drone-core/std", "drone-cortexm/std"]
+host = ["drone-raspberrypi-pico-sdk/host", "drone-core/host", "drone-cortexm/host"]
 periph-clock = ["drone-raspberrypi-pico-map-periph-clock"]
 periph-gpio = ["drone-raspberrypi-pico-map-periph-gpio"]
 periph-pll = ["drone-raspberrypi-pico-map-periph-pll"]

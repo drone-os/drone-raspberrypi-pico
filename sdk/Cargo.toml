@@ -15,7 +15,7 @@ path = "lib.rs"
 
 [features]
 default = []
-std = []
+host = []
 
 [build-dependencies]
 bindgen = "0.61.0"

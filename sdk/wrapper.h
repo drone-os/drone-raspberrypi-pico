@@ -1,6 +1,6 @@
 #include "hardware/platform_defs.h"
 
-#ifndef CARGO_FEATURE_STD
+#ifndef CARGO_FEATURE_HOST
 #include "hardware/clocks.h"
 #include "hardware/pll.h"
 #include "hardware/watchdog.h"

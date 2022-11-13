@@ -27,7 +27,7 @@ macro_rules! global_heap {
         const _: () = {
             struct Heap;
 
-            #[cfg_attr(not(feature = "std"), global_allocator)]
+            #[cfg_attr(not(feature = "host"), global_allocator)]
             static HEAP: Heap = Heap;
 
             unsafe impl ::core::alloc::GlobalAlloc for Heap {

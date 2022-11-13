@@ -1,6 +1,6 @@
 //! Running code on multiple cores.
 
-#![cfg_attr(feature = "std", allow(unused_imports, unreachable_code, unused_variables))]
+#![cfg_attr(feature = "host", allow(unused_imports, unreachable_code, unused_variables))]
 
 mod macros;
 
@@ -15,9 +15,9 @@ use core::mem;
 ///   or by calling [`reset_core1`].
 /// * `vtable` must be a valid pointer to a vector table for core 1.
 pub unsafe fn launch_core1(vtable: *const usize) {
-    #[cfg(feature = "std")]
+    #[cfg(feature = "host")]
     return unimplemented!();
-    #[cfg(not(feature = "std"))]
+    #[cfg(not(feature = "host"))]
     unsafe {
         sdk::multicore_launch_core1_raw(
             mem::transmute(vtable.add(1).read_volatile()),
@@ -34,9 +34,9 @@ pub unsafe fn launch_core1(vtable: *const usize) {
 ///
 /// * Should only be called from core 0.
 pub unsafe fn reset_core1() {
-    #[cfg(feature = "std")]
+    #[cfg(feature = "host")]
     return unimplemented!();
-    #[cfg(not(feature = "std"))]
+    #[cfg(not(feature = "host"))]
     unsafe {
         sdk::multicore_reset_core1();
     }

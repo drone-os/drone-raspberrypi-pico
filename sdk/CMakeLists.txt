@@ -15,7 +15,7 @@ pico_sdk_init()
 add_library(drone_raspberrypi_pico_sdk wrapper.c)
 
 if (PICO_PLATFORM STREQUAL "host")
-    ADD_DEFINITIONS(-DCARGO_FEATURE_STD)
+    ADD_DEFINITIONS(-DCARGO_FEATURE_HOST)
     target_link_libraries(drone_raspberrypi_pico_sdk
         pico_platform)
 else()

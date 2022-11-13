@@ -74,7 +74,7 @@ fn main() -> Result<()> {
 fn configure(src_dir: &Path) -> Result<()> {
     let mut cmake = Command::new("cmake");
     cmake.arg(src_dir);
-    if env::var_os("CARGO_FEATURE_STD").is_none() {
+    if env::var_os("CARGO_FEATURE_HOST").is_none() {
         cmake.arg("-DPICO_PLATFORM:String=rp2040");
     } else {
         cmake.arg("-DPICO_PLATFORM:String=host");
@@ -133,7 +133,7 @@ fn generate_bindings(bindings: &Path, wrapper: &Path, c_flags: &[String]) -> Res
 }
 
 fn generate_boot2(boot2: &Path, bs2_default: &Path) -> Result<()> {
-    if env::var_os("CARGO_FEATURE_STD").is_some() {
+    if env::var_os("CARGO_FEATURE_HOST").is_some() {
         return Ok(());
     }
     let mut boot2 = File::create(boot2)?;

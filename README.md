@@ -21,11 +21,11 @@ Add the crate to your `Cargo.toml` dependencies:
 drone-raspberrypi-pico = { version = "0.15.0", features = [...] }
 ```
 
-Add or extend `std` feature as follows:
+Add or extend `host` feature as follows:
 
 ```toml
 [features]
-std = ["drone-raspberrypi-pico/std"]
+host = ["drone-raspberrypi-pico/host"]
 ```
 
 <!-- cargo-rdme end -->

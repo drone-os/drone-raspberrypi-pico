@@ -54,7 +54,7 @@ use drone_core::reg::tag::RegTag;
 #[doc(no_inline)]
 pub use drone_cortexm::reg::*;
 pub use drone_raspberrypi_pico_map_pieces_traits::*;
-#[cfg(not(feature = "std"))]
+#[cfg(not(feature = "host"))]
 use drone_raspberrypi_pico_sdk::{REG_ALIAS_CLR_BITS, REG_ALIAS_SET_BITS, REG_ALIAS_XOR_BITS};
 
 /// Atomic XOR register access alias.
@@ -295,27 +295,27 @@ where
 }
 
 fn xor_alias_ptr<T: RegTag, R: Reg<T>>() -> *mut <<R as Reg<T>>::Val as Bitfield>::Bits {
-    #[cfg(feature = "std")]
+    #[cfg(feature = "host")]
     unimplemented!();
-    #[cfg(not(feature = "std"))]
+    #[cfg(not(feature = "host"))]
     {
         (R::ADDRESS + REG_ALIAS_XOR_BITS as usize) as *mut <R::Val as Bitfield>::Bits
     }
 }
 
 fn set_alias_ptr<T: RegTag, R: Reg<T>>() -> *mut <<R as Reg<T>>::Val as Bitfield>::Bits {
-    #[cfg(feature = "std")]
+    #[cfg(feature = "host")]
     unimplemented!();
-    #[cfg(not(feature = "std"))]
+    #[cfg(not(feature = "host"))]
     {
         (R::ADDRESS + REG_ALIAS_SET_BITS as usize) as *mut <R::Val as Bitfield>::Bits
     }
 }
 
 fn clear_alias_ptr<T: RegTag, R: Reg<T>>() -> *mut <<R as Reg<T>>::Val as Bitfield>::Bits {
-    #[cfg(feature = "std")]
+    #[cfg(feature = "host")]
     unimplemented!();
-    #[cfg(not(feature = "std"))]
+    #[cfg(not(feature = "host"))]
     {
         (R::ADDRESS + REG_ALIAS_CLR_BITS as usize) as *mut <R::Val as Bitfield>::Bits
     }

@@ -14,17 +14,17 @@
 //! drone-raspberrypi-pico = { version = "0.15.0", features = [...] }
 //! ```
 //!
-//! Add or extend `std` feature as follows:
+//! Add or extend `host` feature as follows:
 //!
 //! ```toml
 //! [features]
-//! std = ["drone-raspberrypi-pico/std"]
+//! host = ["drone-raspberrypi-pico/host"]
 //! ```
 
 #![warn(missing_docs, unsafe_op_in_unsafe_fn)]
 #![warn(clippy::pedantic)]
 #![allow(clippy::doc_markdown)]
-#![cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(not(feature = "host"), no_std)]
 
 use core::cell::UnsafeCell;
 use drone_core::reg::prelude::*;
