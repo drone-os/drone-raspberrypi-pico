@@ -57,9 +57,6 @@ fn main() -> Result<()> {
     println!("cargo:rerun-if-changed=wrapper.c");
     println!("cargo:rerun-if-changed=CMakeLists.txt");
     println!("cargo:rerun-if-changed=pico_sdk_import.cmake");
-    if env::var_os("CARGO_FEATURE_STD").is_some() {
-        return Ok(());
-    }
     println!("cargo:rustc-link-search=native={}", build_dir.display());
     println!("cargo:rustc-link-lib=drone_raspberrypi_pico_sdk");
 
@@ -77,6 +74,11 @@ fn main() -> Result<()> {
 fn configure(src_dir: &Path) -> Result<()> {
     let mut cmake = Command::new("cmake");
     cmake.arg(src_dir);
+    if env::var_os("CARGO_FEATURE_STD").is_none() {
+        cmake.arg("-DPICO_PLATFORM:String=rp2040");
+    } else {
+        cmake.arg("-DPICO_PLATFORM:String=host");
+    }
     if !cmake.status().wrap_err("running cmake")?.success() {
         bail!("cmake exited unsucessfully");
     }
@@ -131,6 +133,9 @@ fn generate_bindings(bindings: &Path, wrapper: &Path, c_flags: &[String]) -> Res
 }
 
 fn generate_boot2(boot2: &Path, bs2_default: &Path) -> Result<()> {
+    if env::var_os("CARGO_FEATURE_STD").is_some() {
+        return Ok(());
+    }
     let mut boot2 = File::create(boot2)?;
     writeln!(boot2, "#[macro_export]")?;
     writeln!(boot2, "macro_rules! boot2 {{")?;

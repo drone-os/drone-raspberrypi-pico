@@ -1,5 +1,7 @@
-#include "hardware/clocks.h"
 #include "hardware/platform_defs.h"
+
+#ifndef CARGO_FEATURE_STD
+#include "hardware/clocks.h"
 #include "hardware/pll.h"
 #include "hardware/watchdog.h"
 #include "hardware/xosc.h"
@@ -11,3 +13,4 @@
 #include "pico/int64_ops.h"
 #include "pico/multicore.h"
 #include "pico/platform.h"
+#endif

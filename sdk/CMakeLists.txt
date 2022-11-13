@@ -14,16 +14,22 @@ pico_sdk_init()
 
 add_library(drone_raspberrypi_pico_sdk wrapper.c)
 
-target_link_libraries(drone_raspberrypi_pico_sdk
-    pico_standard_link
-    pico_mem_ops
-    pico_bit_ops
-    pico_int64_ops
-    pico_divider
-    pico_float
-    pico_double
-    pico_platform
-    pico_multicore
-    pico_bootrom
-    hardware_regs
-    hardware_clocks)
+if (PICO_PLATFORM STREQUAL "host")
+    ADD_DEFINITIONS(-DCARGO_FEATURE_STD)
+    target_link_libraries(drone_raspberrypi_pico_sdk
+        pico_platform)
+else()
+    target_link_libraries(drone_raspberrypi_pico_sdk
+        pico_standard_link
+        pico_mem_ops
+        pico_bit_ops
+        pico_int64_ops
+        pico_divider
+        pico_float
+        pico_double
+        pico_platform
+        pico_multicore
+        pico_bootrom
+        hardware_regs
+        hardware_clocks)
+endif()
