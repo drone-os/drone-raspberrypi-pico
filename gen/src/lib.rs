@@ -3,6 +3,7 @@
 #![warn(clippy::pedantic)]
 #![allow(clippy::missing_errors_doc, clippy::missing_panics_doc)]
 
+mod clocks;
 mod sio;
 
 pub use drone_config::{bail, Result};
@@ -213,5 +214,6 @@ fn svd_parse() -> Result<Device> {
     let pico_sdk_path = Path::new(&pico_sdk_path);
     let mut dev = drone_svd::parse(pico_sdk_path.join("src/rp2040/hardware_regs/rp2040.svd"))?;
     sio::patch(&mut dev);
+    clocks::patch(&mut dev);
     Ok(dev)
 }

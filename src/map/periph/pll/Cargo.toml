@@ -1,0 +1,20 @@
+[package]
+name = "drone-raspberrypi-pico-map-periph-pll"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+homepage.workspace = true
+license.workspace = true
+documentation = "https://api.drone-os.com/drone-raspberrypi-pico/0.15/drone_raspberrypi_pico_map_periph_pll/"
+description = """
+RP2040 PLL peripheral mappings for Drone, an Embedded Operating System.
+"""
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+drone-core.workspace = true
+drone-cortexm.workspace = true
+drone-raspberrypi-pico-map-pieces.workspace = true

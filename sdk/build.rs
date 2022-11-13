@@ -1,13 +1,48 @@
+use bindgen::callbacks::ParseCallbacks;
 use color_eyre::eyre::{bail, Result, WrapErr};
+use regex::Regex;
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::path::Path;
 use std::process::Command;
+use std::sync::{Arc, Mutex};
 use std::{env, fs, io};
 
 const FLAGS_PATH: &str = "CMakeFiles/drone_raspberrypi_pico_sdk.dir/flags.make";
 const BOOT2_PATH: &str = "pico-sdk/src/rp2_common/boot_stage2/bs2_default_padded_checksummed.S";
+
+#[derive(Debug)]
+pub struct ParsePlatformDefs {
+    regex: Regex,
+    defs: Arc<Mutex<HashMap<String, String>>>,
+}
+
+impl ParsePlatformDefs {
+    fn new(defs: &Arc<Mutex<HashMap<String, String>>>) -> Self {
+        Self {
+            regex: Regex::new(r"^#define\s+(?P<name>[_[:alpha:]]+)\s+_u\((?P<value>\d+)\)\s*$")
+                .unwrap(),
+            defs: Arc::clone(defs),
+        }
+    }
+}
+
+impl ParseCallbacks for ParsePlatformDefs {
+    fn include_file(&self, filename: &str) {
+        if filename.ends_with("src/rp2040/hardware_regs/include/hardware/platform_defs.h") {
+            let file = File::open(filename).unwrap();
+            for line in BufReader::new(file).lines() {
+                if let Some(caps) = self.regex.captures(&dbg!(line.unwrap())) {
+                    let name = caps.name("name").unwrap().as_str().to_string();
+                    let value = caps.name("value").unwrap().as_str().to_string();
+                    self.defs.lock().unwrap().insert(name, value);
+                }
+            }
+        }
+    }
+}
 
 fn main() -> Result<()> {
     color_eyre::install()?;
@@ -75,6 +110,7 @@ fn parse_flags(flags: &Path) -> Result<Vec<String>> {
 }
 
 fn generate_bindings(bindings: &Path, wrapper: &Path, c_flags: &[String]) -> Result<()> {
+    let platform_defs = Arc::new(Mutex::new(HashMap::new()));
     bindgen::Builder::default()
         .use_core()
         .ctypes_prefix("::core::ffi")
@@ -82,10 +118,15 @@ fn generate_bindings(bindings: &Path, wrapper: &Path, c_flags: &[String]) -> Res
         .clang_args(c_flags)
         .header(wrapper.display().to_string())
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
+        .parse_callbacks(Box::new(ParsePlatformDefs::new(&platform_defs)))
         .generate()
         .wrap_err("generating bindings")?
         .write_to_file(bindings)
         .wrap_err("writing bindings")?;
+    let mut bindings = File::options().append(true).open(bindings)?;
+    for (name, value) in Arc::try_unwrap(platform_defs).unwrap().into_inner().unwrap() {
+        writeln!(bindings, "pub const {name}: u32 = {value};")?;
+    }
     Ok(())
 }
 

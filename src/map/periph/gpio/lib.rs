@@ -145,7 +145,7 @@ macro_rules! map_gpio {
     };
 }
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO0 register tokens.",
     periph_gpio0,
     "GPIO0 peripheral variant.",
@@ -160,9 +160,9 @@ map_gpio!(
     GPIO0_OE_SET,
     GPIO0_OE_CLR,
     GPIO0_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO1 register tokens.",
     periph_gpio1,
     "GPIO1 peripheral variant.",
@@ -177,9 +177,9 @@ map_gpio!(
     GPIO1_OE_SET,
     GPIO1_OE_CLR,
     GPIO1_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO2 register tokens.",
     periph_gpio2,
     "GPIO2 peripheral variant.",
@@ -194,9 +194,9 @@ map_gpio!(
     GPIO2_OE_SET,
     GPIO2_OE_CLR,
     GPIO2_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO3 register tokens.",
     periph_gpio3,
     "GPIO3 peripheral variant.",
@@ -211,9 +211,9 @@ map_gpio!(
     GPIO3_OE_SET,
     GPIO3_OE_CLR,
     GPIO3_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO4 register tokens.",
     periph_gpio4,
     "GPIO4 peripheral variant.",
@@ -228,9 +228,9 @@ map_gpio!(
     GPIO4_OE_SET,
     GPIO4_OE_CLR,
     GPIO4_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO5 register tokens.",
     periph_gpio5,
     "GPIO5 peripheral variant.",
@@ -245,9 +245,9 @@ map_gpio!(
     GPIO5_OE_SET,
     GPIO5_OE_CLR,
     GPIO5_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO6 register tokens.",
     periph_gpio6,
     "GPIO6 peripheral variant.",
@@ -262,9 +262,9 @@ map_gpio!(
     GPIO6_OE_SET,
     GPIO6_OE_CLR,
     GPIO6_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO7 register tokens.",
     periph_gpio7,
     "GPIO7 peripheral variant.",
@@ -279,9 +279,9 @@ map_gpio!(
     GPIO7_OE_SET,
     GPIO7_OE_CLR,
     GPIO7_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO8 register tokens.",
     periph_gpio8,
     "GPIO8 peripheral variant.",
@@ -296,9 +296,9 @@ map_gpio!(
     GPIO8_OE_SET,
     GPIO8_OE_CLR,
     GPIO8_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO9 register tokens.",
     periph_gpio9,
     "GPIO9 peripheral variant.",
@@ -313,9 +313,9 @@ map_gpio!(
     GPIO9_OE_SET,
     GPIO9_OE_CLR,
     GPIO9_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO10 register tokens.",
     periph_gpio10,
     "GPIO10 peripheral variant.",
@@ -330,9 +330,9 @@ map_gpio!(
     GPIO10_OE_SET,
     GPIO10_OE_CLR,
     GPIO10_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO11 register tokens.",
     periph_gpio11,
     "GPIO11 peripheral variant.",
@@ -347,9 +347,9 @@ map_gpio!(
     GPIO11_OE_SET,
     GPIO11_OE_CLR,
     GPIO11_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO12 register tokens.",
     periph_gpio12,
     "GPIO12 peripheral variant.",
@@ -364,9 +364,9 @@ map_gpio!(
     GPIO12_OE_SET,
     GPIO12_OE_CLR,
     GPIO12_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO13 register tokens.",
     periph_gpio13,
     "GPIO13 peripheral variant.",
@@ -381,9 +381,9 @@ map_gpio!(
     GPIO13_OE_SET,
     GPIO13_OE_CLR,
     GPIO13_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO14 register tokens.",
     periph_gpio14,
     "GPIO14 peripheral variant.",
@@ -398,9 +398,9 @@ map_gpio!(
     GPIO14_OE_SET,
     GPIO14_OE_CLR,
     GPIO14_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO15 register tokens.",
     periph_gpio15,
     "GPIO15 peripheral variant.",
@@ -415,9 +415,9 @@ map_gpio!(
     GPIO15_OE_SET,
     GPIO15_OE_CLR,
     GPIO15_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO16 register tokens.",
     periph_gpio16,
     "GPIO16 peripheral variant.",
@@ -432,9 +432,9 @@ map_gpio!(
     GPIO16_OE_SET,
     GPIO16_OE_CLR,
     GPIO16_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO17 register tokens.",
     periph_gpio17,
     "GPIO17 peripheral variant.",
@@ -449,9 +449,9 @@ map_gpio!(
     GPIO17_OE_SET,
     GPIO17_OE_CLR,
     GPIO17_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO18 register tokens.",
     periph_gpio18,
     "GPIO18 peripheral variant.",
@@ -466,9 +466,9 @@ map_gpio!(
     GPIO18_OE_SET,
     GPIO18_OE_CLR,
     GPIO18_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO19 register tokens.",
     periph_gpio19,
     "GPIO19 peripheral variant.",
@@ -483,9 +483,9 @@ map_gpio!(
     GPIO19_OE_SET,
     GPIO19_OE_CLR,
     GPIO19_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO20 register tokens.",
     periph_gpio20,
     "GPIO20 peripheral variant.",
@@ -500,9 +500,9 @@ map_gpio!(
     GPIO20_OE_SET,
     GPIO20_OE_CLR,
     GPIO20_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO21 register tokens.",
     periph_gpio21,
     "GPIO21 peripheral variant.",
@@ -517,9 +517,9 @@ map_gpio!(
     GPIO21_OE_SET,
     GPIO21_OE_CLR,
     GPIO21_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO22 register tokens.",
     periph_gpio22,
     "GPIO22 peripheral variant.",
@@ -534,9 +534,9 @@ map_gpio!(
     GPIO22_OE_SET,
     GPIO22_OE_CLR,
     GPIO22_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO23 register tokens.",
     periph_gpio23,
     "GPIO23 peripheral variant.",
@@ -551,9 +551,9 @@ map_gpio!(
     GPIO23_OE_SET,
     GPIO23_OE_CLR,
     GPIO23_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO24 register tokens.",
     periph_gpio24,
     "GPIO24 peripheral variant.",
@@ -568,9 +568,9 @@ map_gpio!(
     GPIO24_OE_SET,
     GPIO24_OE_CLR,
     GPIO24_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO25 register tokens.",
     periph_gpio25,
     "GPIO25 peripheral variant.",
@@ -585,9 +585,9 @@ map_gpio!(
     GPIO25_OE_SET,
     GPIO25_OE_CLR,
     GPIO25_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO26 register tokens.",
     periph_gpio26,
     "GPIO26 peripheral variant.",
@@ -602,9 +602,9 @@ map_gpio!(
     GPIO26_OE_SET,
     GPIO26_OE_CLR,
     GPIO26_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO27 register tokens.",
     periph_gpio27,
     "GPIO27 peripheral variant.",
@@ -619,9 +619,9 @@ map_gpio!(
     GPIO27_OE_SET,
     GPIO27_OE_CLR,
     GPIO27_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO28 register tokens.",
     periph_gpio28,
     "GPIO28 peripheral variant.",
@@ -636,9 +636,9 @@ map_gpio!(
     GPIO28_OE_SET,
     GPIO28_OE_CLR,
     GPIO28_OE_XOR,
-);
+}
 
-map_gpio!(
+map_gpio! {
     "Extracts GPIO29 register tokens.",
     periph_gpio29,
     "GPIO29 peripheral variant.",
@@ -653,4 +653,4 @@ map_gpio!(
     GPIO29_OE_SET,
     GPIO29_OE_CLR,
     GPIO29_OE_XOR,
-);
+}

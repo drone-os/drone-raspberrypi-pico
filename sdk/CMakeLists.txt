@@ -22,5 +22,8 @@ target_link_libraries(drone_raspberrypi_pico_sdk
     pico_divider
     pico_float
     pico_double
+    pico_platform
+    pico_multicore
     pico_bootrom
-    pico_multicore)
+    hardware_regs
+    hardware_clocks)
