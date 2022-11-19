@@ -1,20 +1,18 @@
-#![warn(clippy::pedantic)]
-#![allow(clippy::wildcard_imports)]
-#![no_std]
+//! General Purpose Input / Output (GPIO) pins.
 
+use crate::reg::marker::*;
 use drone_core::periph;
-use drone_cortexm::reg::marker::*;
 
 periph! {
     /// Generic GPIO peripheral variant.
     pub trait GpioMap {}
 
     /// Generic GPIO peripheral.
-    pub struct GpioPeriph;
+    pub struct Gpio;
 
     IO_BANK0 {
         GPIO_CTRL {
-            0x20 RwReg;
+            0x20 RwRegAtomicAlias;
             IRQOVER { RwRwRegFieldBits }
             INOVER { RwRwRegFieldBits }
             OEOVER { RwRwRegFieldBits }
@@ -89,8 +87,8 @@ macro_rules! map_gpio {
 
             impl GpioMap for $gpio_ty {}
 
-            drone_raspberrypi_pico_map_pieces::reg;
-            crate;
+            crate::map::reg;
+            crate::map::periph::gpio;
 
             IO_BANK0 {
                 GPIO_CTRL {

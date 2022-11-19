@@ -8,7 +8,7 @@ macro_rules! global_stream {
             #[inline]
             #[no_mangle]
             extern "C" fn drone_stream_runtime() -> *mut ::drone_core::_rt::drone_stream::Runtime {
-                if $crate::cpuid() == 0 {
+                if $crate::multicore::cpuid() == 0 {
                     unsafe { ::core::ptr::addr_of_mut!((*$stream0.get()).runtime) }
                 } else {
                     unsafe { ::core::ptr::addr_of_mut!((*$stream1.get()).runtime) }
@@ -34,7 +34,7 @@ macro_rules! global_heap {
                 #[inline(never)]
                 #[export_name = "alloc"]
                 unsafe fn alloc(&self, layout: ::core::alloc::Layout) -> *mut u8 {
-                    if $crate::cpuid() == 0 {
+                    if $crate::multicore::cpuid() == 0 {
                         unsafe { ::core::alloc::Allocator::allocate(&$heap0, layout) }
                     } else {
                         unsafe { ::core::alloc::Allocator::allocate(&$heap1, layout) }
@@ -47,7 +47,7 @@ macro_rules! global_heap {
                 #[export_name = "dealloc"]
                 unsafe fn dealloc(&self, ptr: *mut u8, layout: ::core::alloc::Layout) {
                     let ptr = ::core::ptr::NonNull::new_unchecked(ptr);
-                    if $crate::cpuid() == 0 {
+                    if $crate::multicore::cpuid() == 0 {
                         unsafe { ::core::alloc::Allocator::deallocate(&$heap0, ptr, layout) }
                     } else {
                         unsafe { ::core::alloc::Allocator::deallocate(&$heap1, ptr, layout) }

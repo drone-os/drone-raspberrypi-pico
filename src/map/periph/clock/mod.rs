@@ -1,20 +1,18 @@
-#![warn(clippy::pedantic)]
-#![allow(clippy::wildcard_imports)]
-#![no_std]
+//! Clocks.
 
+use crate::reg::marker::*;
 use drone_core::periph;
-use drone_cortexm::reg::marker::*;
 
 periph! {
     /// Generic Clock peripheral variant.
     pub trait ClockMap {}
 
     /// Generic Clock peripheral.
-    pub struct ClockPeriph;
+    pub struct Clock;
 
     CLOCKS {
         CTRL {
-            0x20 RwReg;
+            0x20 RwRegAtomicAlias;
             NUDGE { RwRwRegFieldBit Option }
             PHASE { RwRwRegFieldBits Option }
             DC50 { RwRwRegFieldBit Option }
@@ -24,22 +22,22 @@ periph! {
             SRC { RwRwRegFieldBits Option }
         }
         DIV {
-            0x20 RwReg Option;
+            0x20 RwRegAtomicAlias Option;
             INT { RwRwRegFieldBits }
             FRAC { RwRwRegFieldBits Option }
         }
         SELECTED {
-            0x20 RoReg;
+            0x20 RoRegAtomicAlias;
         }
         RESUS_CTRL {
-            0x20 RwReg Option;
+            0x20 RwRegAtomicAlias Option;
             CLEAR { RwRwRegFieldBit }
             FRCE { RwRwRegFieldBit }
             ENABLE { RwRwRegFieldBit }
             TIMEOUT { RwRwRegFieldBits }
         }
         RESUS_STATUS {
-            0x20 RoReg Option;
+            0x20 RoRegAtomicAlias Option;
             RESUSSED { RoRoRegFieldBit }
         }
     }
@@ -77,8 +75,8 @@ macro_rules! map_clock {
 
             impl ClockMap for $clock_ty {}
 
-            drone_raspberrypi_pico_map_pieces::reg;
-            crate;
+            crate::map::reg;
+            crate::map::periph::clock;
 
             CLOCKS {
                 CTRL {

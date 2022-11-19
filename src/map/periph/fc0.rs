@@ -5,11 +5,11 @@
 use drone_core::periph;
 
 periph::singular! {
-    #[doc(hidden)]
-    pub macro periph_fc0_inner;
+    /// Extracts Frequency Counter register tokens.
+    pub macro periph_fc0;
 
     /// Frequency Counter.
-    pub struct Fc0Periph;
+    pub struct Fc0;
 
     crate::map::reg;
     crate::map::periph::fc0;
@@ -25,17 +25,3 @@ periph::singular! {
         FC0_RESULT;
     }
 }
-
-// Workaround the `macro_expanded_macro_exports_accessed_by_absolute_paths`
-// error.
-#[doc(hidden)]
-#[macro_export]
-macro_rules! periph_fc0 {
-    ($($tt:tt)*) => {
-        $crate::periph_fc0_inner!($($tt)*);
-    };
-}
-
-/// Extracts Frequency Counter register tokens.
-#[doc(inline)]
-pub use crate::periph_fc0;

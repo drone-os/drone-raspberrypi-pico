@@ -16,9 +16,6 @@ members = [
     "src/map/pieces/10",
     "src/map/pieces/11",
     "src/map/pieces/12",
-    "src/map/periph/clock",
-    "src/map/periph/gpio",
-    "src/map/periph/pll",
 ]
 
 [workspace.package]
@@ -93,18 +90,6 @@ path = "src/map/pieces/11"
 version = "=0.15.0"
 path = "src/map/pieces/12"
 
-[workspace.dependencies.drone-raspberrypi-pico-map-periph-clock]
-version = "=0.15.0"
-path = "src/map/periph/clock"
-
-[workspace.dependencies.drone-raspberrypi-pico-map-periph-gpio]
-version = "=0.15.0"
-path = "src/map/periph/gpio"
-
-[workspace.dependencies.drone-raspberrypi-pico-map-periph-pll]
-version = "=0.15.0"
-path = "src/map/periph/pll"
-
 [workspace.dependencies.drone-config]
 version = "0.15.0"
 path = "../drone/config"
@@ -154,20 +139,13 @@ Raspberry Pi Pico (RP2040) support for Drone, an Embedded Operating System.
 maintenance = { status = "actively-developed" }
 
 [features]
-default = ["periph-all"]
+default = []
 host = ["drone-raspberrypi-pico-sdk/host", "drone-core/host", "drone-cortexm/host"]
-periph-clock = ["drone-raspberrypi-pico-map-periph-clock"]
-periph-gpio = ["drone-raspberrypi-pico-map-periph-gpio"]
-periph-pll = ["drone-raspberrypi-pico-map-periph-pll"]
-periph-all = ["periph-clock", "periph-gpio", "periph-pll"]
-all = ["periph-all"]
+all = []
 
 [dependencies]
 drone-core.workspace = true
 drone-cortexm.workspace = true
-drone-raspberrypi-pico-map-periph-clock = { workspace = true, optional = true }
-drone-raspberrypi-pico-map-periph-gpio = { workspace = true, optional = true }
-drone-raspberrypi-pico-map-periph-pll = { workspace = true, optional = true }
 drone-raspberrypi-pico-map-pieces.workspace = true
 drone-raspberrypi-pico-map-pieces-traits.workspace = true
 drone-raspberrypi-pico-sdk.workspace = true

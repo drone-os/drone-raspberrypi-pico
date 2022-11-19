@@ -124,10 +124,6 @@
           sleep 30
           cd src/pieces && cargo publish
           sleep 30
-          cd src/periph/clock && cargo publish
-          cd src/periph/gpio && cargo publish
-          cd src/periph/pll && cargo publish
-          sleep 30
           cargo publish --features all
         '';
 

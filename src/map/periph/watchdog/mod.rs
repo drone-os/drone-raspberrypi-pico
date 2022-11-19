@@ -5,11 +5,11 @@
 use drone_core::periph;
 
 periph::singular! {
-    #[doc(hidden)]
-    pub macro periph_watchdog_inner;
+    /// Extracts Watchdog register tokens.
+    pub macro periph_watchdog;
 
     /// Watchdog peripheral.
-    pub struct WatchdogPeriph;
+    pub struct Watchdog;
 
     crate::map::reg;
     crate::map::periph::watchdog;
@@ -29,17 +29,3 @@ periph::singular! {
         TICK;
     }
 }
-
-// Workaround the `macro_expanded_macro_exports_accessed_by_absolute_paths`
-// error.
-#[doc(hidden)]
-#[macro_export]
-macro_rules! periph_watchdog {
-    ($($tt:tt)*) => {
-        $crate::periph_watchdog_inner!($($tt)*);
-    };
-}
-
-/// Extracts Crystal Oscillator register tokens.
-#[doc(inline)]
-pub use crate::periph_watchdog;

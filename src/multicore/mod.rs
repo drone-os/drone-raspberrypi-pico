@@ -6,6 +6,18 @@ mod macros;
 
 use crate::sdk;
 use core::mem;
+use drone_core::reg::prelude::*;
+use drone_core::token::Token;
+use drone_raspberrypi_pico_map_pieces::reg::sio::Cpuid;
+
+/// Returns 0 when called on processor core 0, and 1 when called on processor
+/// core 1.
+#[must_use]
+pub fn cpuid() -> u32 {
+    // Safe because the register is read-only.
+    let cpuid = unsafe { Cpuid::<Urt>::take() };
+    cpuid.load_bits()
+}
 
 /// Launch code on core 1.
 ///

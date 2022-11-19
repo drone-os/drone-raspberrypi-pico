@@ -1,37 +1,35 @@
-#![warn(clippy::pedantic)]
-#![allow(clippy::wildcard_imports)]
-#![no_std]
+//! Phase Locked Loops.
 
+use crate::reg::marker::*;
 use drone_core::periph;
-use drone_cortexm::reg::marker::*;
 
 periph! {
     /// Generic PLL peripheral variant.
     pub trait PllMap {}
 
     /// Generic PLL peripheral.
-    pub struct PllPeriph;
+    pub struct Pll;
 
     PLL {
         CS {
-            0x20 RwReg;
+            0x20 RwRegAtomicAlias;
             LOCK { RoRwRegFieldBit }
             BYPASS { RwRwRegFieldBit }
             REFDIV { RwRwRegFieldBits }
         }
         PWR {
-            0x20 RwReg;
+            0x20 RwRegAtomicAlias;
             VCOPD { RwRwRegFieldBit }
             POSTDIVPD { RwRwRegFieldBit }
             DSMPD { RwRwRegFieldBit }
             PD { RwRwRegFieldBit }
         }
         FBDIV_INT {
-            0x20 RwReg;
+            0x20 RwRegAtomicAlias;
             FBDIV_INT { RwRwRegFieldBits }
         }
         PRIM {
-            0x20 RwReg;
+            0x20 RwRegAtomicAlias;
             POSTDIV1 { RwRwRegFieldBits }
             POSTDIV2 { RwRwRegFieldBits }
         }
@@ -49,8 +47,8 @@ macro_rules! map_pll {
 
             impl PllMap for $pll_ty {}
 
-            drone_raspberrypi_pico_map_pieces::reg;
-            crate;
+            crate::map::reg;
+            crate::map::periph::pll;
 
             PLL {
                 $pll;
