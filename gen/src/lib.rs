@@ -169,6 +169,84 @@ const WRAPPED_BUILTINS: &[&str] = &[
     "fma",
 ];
 
+const SIO_CORE_REGS: &[&str] = &[
+    "FIFO_ST",
+    "FIFO_WR",
+    "FIFO_RD",
+    "SPINLOCK_ST",
+    "SPINLOCK0",
+    "SPINLOCK1",
+    "SPINLOCK2",
+    "SPINLOCK3",
+    "SPINLOCK4",
+    "SPINLOCK5",
+    "SPINLOCK6",
+    "SPINLOCK7",
+    "SPINLOCK8",
+    "SPINLOCK9",
+    "SPINLOCK10",
+    "SPINLOCK11",
+    "SPINLOCK12",
+    "SPINLOCK13",
+    "SPINLOCK14",
+    "SPINLOCK15",
+    "SPINLOCK16",
+    "SPINLOCK17",
+    "SPINLOCK18",
+    "SPINLOCK19",
+    "SPINLOCK20",
+    "SPINLOCK21",
+    "SPINLOCK22",
+    "SPINLOCK23",
+    "SPINLOCK24",
+    "SPINLOCK25",
+    "SPINLOCK26",
+    "SPINLOCK27",
+    "SPINLOCK28",
+    "SPINLOCK29",
+    "SPINLOCK30",
+    "SPINLOCK31",
+    "DIV_UDIVIDEND",
+    "DIV_UDIVISOR",
+    "DIV_SDIVIDEND",
+    "DIV_SDIVISOR",
+    "DIV_QUOTIENT",
+    "DIV_REMAINDER",
+    "DIV_CSR",
+    "INTERP0_ACCUM0",
+    "INTERP0_ACCUM1",
+    "INTERP0_BASE0",
+    "INTERP0_BASE1",
+    "INTERP0_BASE2",
+    "INTERP0_POP_LANE0",
+    "INTERP0_POP_LANE1",
+    "INTERP0_POP_FULL",
+    "INTERP0_PEEK_LANE0",
+    "INTERP0_PEEK_LANE1",
+    "INTERP0_PEEK_FULL",
+    "INTERP0_CTRL_LANE0",
+    "INTERP0_CTRL_LANE1",
+    "INTERP0_ACCUM0_ADD",
+    "INTERP0_ACCUM1_ADD",
+    "INTERP0_BASE_1AND0",
+    "INTERP1_ACCUM0",
+    "INTERP1_ACCUM1",
+    "INTERP1_BASE0",
+    "INTERP1_BASE1",
+    "INTERP1_BASE2",
+    "INTERP1_POP_LANE0",
+    "INTERP1_POP_LANE1",
+    "INTERP1_POP_FULL",
+    "INTERP1_PEEK_LANE0",
+    "INTERP1_PEEK_LANE1",
+    "INTERP1_PEEK_FULL",
+    "INTERP1_CTRL_LANE0",
+    "INTERP1_CTRL_LANE1",
+    "INTERP1_ACCUM0_ADD",
+    "INTERP1_ACCUM1_ADD",
+    "INTERP1_BASE_1AND0",
+];
+
 /// Injects optimized versions for some standard compiler builtins.
 ///
 /// RP2040 bootrom contains a library of optimized common functions. This
@@ -203,6 +281,13 @@ pub fn generate_index() -> Result<()> {
 
 fn generator() -> Generator<'static> {
     let mut generator = Generator::new("rp2040_reg_tokens");
+    generator.core_regs(
+        "rp2040_core_reg_tokens",
+        "drone_cortexm::map::cortexm_reg_tokens",
+        |peripheral, names| {
+            peripheral == "SIO" && names.iter().any(|name| SIO_CORE_REGS.contains(&name.as_str()))
+        },
+    );
     generator.register_traits_callback(|peripheral, _, _| {
         (peripheral != "SIO").then(|| "RegAtomicAlias".to_string()).into_iter().collect()
     });
