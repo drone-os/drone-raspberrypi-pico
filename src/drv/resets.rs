@@ -25,6 +25,30 @@ impl Resets {
         self.periph
     }
 
+    /// Resets the specified HW blocks.
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// # use drone_raspberrypi_pico::map::rp2040_reg_tokens;
+    /// # rp2040_reg_tokens! { index => pub Regs; }
+    /// # let reg = unsafe { <Regs as drone_core::token::Token>::take() };
+    /// use drone_raspberrypi_pico::drv::Resets;
+    /// use drone_raspberrypi_pico::periph_resets;
+    ///
+    /// let resets = Resets::new(periph_resets!(reg));
+    /// resets.reset(|r| r.set_spi0());
+    /// ```
+    pub fn reset(
+        &self,
+        f: impl for<'a> FnOnce(
+            &'a mut reg::resets::reset::Hold<'a, Srt>,
+        ) -> &'a mut reg::resets::reset::Hold<'a, Srt>,
+    ) {
+        let resets = f(&mut self.periph.resets_reset.zeroed()).val().bits();
+        self.periph.resets_reset.modify_set_bits(resets);
+    }
+
     /// Brings specified HW blocks out of reset and wait for completion.
     ///
     /// # Examples
@@ -48,5 +72,30 @@ impl Resets {
         let resets = f(&mut self.periph.resets_reset.zeroed()).val().bits();
         self.periph.resets_reset.modify_clear_bits(resets);
         spin_until!(!self.periph.resets_reset_done.load_bits() & resets == 0);
+    }
+
+    /// Resets the specified HW blocks and immediately brings them out of reset
+    /// and wait for completion.
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// # use drone_raspberrypi_pico::map::rp2040_reg_tokens;
+    /// # rp2040_reg_tokens! { index => pub Regs; }
+    /// # let reg = unsafe { <Regs as drone_core::token::Token>::take() };
+    /// use drone_raspberrypi_pico::drv::Resets;
+    /// use drone_raspberrypi_pico::periph_resets;
+    ///
+    /// let resets = Resets::new(periph_resets!(reg));
+    /// resets.reset_unreset(|r| r.set_spi0());
+    /// ```
+    pub fn reset_unreset(
+        &self,
+        f: impl for<'a> Fn(
+            &'a mut reg::resets::reset::Hold<'a, Srt>,
+        ) -> &'a mut reg::resets::reset::Hold<'a, Srt>,
+    ) {
+        self.reset(|r| f(r));
+        self.unreset(|r| f(r));
     }
 }

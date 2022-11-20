@@ -27,6 +27,7 @@ impl Watchdog {
     /// Starts the watchdog tick.
     ///
     /// Important: This function also provides a tick reference to the timer.
+    #[inline]
     pub fn start_tick(&self) {
         self.periph.watchdog_tick.store(|r| r.write_cycles(XOSC_MHZ).set_enable());
     }

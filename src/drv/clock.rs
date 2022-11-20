@@ -25,6 +25,26 @@ impl<T: periph::ClockMap> Clock<T> {
         self.periph
     }
 
+    /// Starts the clock generator cleanly.
+    pub fn enable(&self)
+    where
+        T: periph::clock::ClocksCtrlEnable,
+    {
+        self.periph.clocks_ctrl.store_reg(|r, v| {
+            r.enable().set(v);
+        });
+    }
+
+    /// Stops the clock generator cleanly.
+    pub fn disable(&self)
+    where
+        T: periph::clock::ClocksCtrlEnable,
+    {
+        self.periph.clocks_ctrl.store_reg(|r, v| {
+            r.enable().clear(v);
+        });
+    }
+
     /// Selects the glitchless multiplexer input.
     ///
     /// This function will block until the clock is selected by the glitchless
